@@ -1,0 +1,23 @@
+{
+  "name": "amazona",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "E-commerce Amazon clone",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phihuynh94/amazona.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phihuynh94/amazona/issues"
+  },
+  "homepage": "https://github.com/phihuynh94/amazona#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
