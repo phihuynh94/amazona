@@ -1,2 +1,2 @@
 # amazona
-Amazon clone
+E-commerce Amazon clone
