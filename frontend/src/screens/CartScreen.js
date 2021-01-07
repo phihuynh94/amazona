@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import MessageBox from "../components/MessageBox";
 
-import { addToCart } from "../actions/cartAction";
+import { addToCart, removeFromCart } from "../actions/cartAction";
 
 function CartScreen({ match, location, history }) {
   const dispatch = useDispatch();
@@ -21,7 +21,9 @@ function CartScreen({ match, location, history }) {
     }
   }, [dispatch, productId, qty]);
 
-  const removeFromCartHandler = (id) => {};
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
+  };
 
   const checkoutHandler = () => {
     history.push("/signin?redirect=shipping");
