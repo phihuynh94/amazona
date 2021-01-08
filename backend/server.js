@@ -7,6 +7,7 @@ import productRouter from "./routers/productRouter.js";
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI, {

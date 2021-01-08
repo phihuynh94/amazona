@@ -1,12 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-const SigninScreen = () => {
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+
+import { signin } from "../actions/userActions";
+
+const SigninScreen = ({ location, history }) => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const redicrect = location.search ? location.search.split("=")[1] : "/";
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo, loading, error } = userSignin;
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redicrect);
+    }
+  }, [history, redicrect, userInfo]);
+
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(signin(email, password));
   };
 
   return (
@@ -15,6 +35,8 @@ const SigninScreen = () => {
         <div>
           <h1>Sign In</h1>
         </div>
+        {loading && <LoadingBox />}
+        {error && <MessageBox variant="danger">{error}</MessageBox>}
         <div>
           <label htmlFor="email">Email address</label>
           <input

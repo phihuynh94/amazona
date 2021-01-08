@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import MessageBox from "../components/MessageBox";
 
-import { addToCart, removeFromCart } from "../actions/cartAction";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 
 function CartScreen({ match, location, history }) {
   const dispatch = useDispatch();
