@@ -1,11 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 import data from "./data.js";
 import userRouter from "./routers/userRouter.js";
 
 const app = express();
-mongoose.connect("mongodb://localhost/amazona", {
+dotenv.config();
+
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
