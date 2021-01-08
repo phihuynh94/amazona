@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/phihuynh94/amazona#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "mongoose": "^5.11.10"
   }
 }
