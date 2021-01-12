@@ -1,14 +1,15 @@
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import { signout } from "./actions/userActions";
+
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
 import SigninScreen from "./screens/SigninScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-
-import { signout } from "./actions/userActions";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
+import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ function App() {
           <Route path="/signin" component={SigninScreen} />
           <Route path="/register" component={RegisterScreen} />
           <Route path="/shipping" component={ShippingAddressScreen} />
+          <Route path="/payment" component={PaymentMethodScreen} />
         </main>
         <footer className="row center">All right reserved</footer>
       </div>

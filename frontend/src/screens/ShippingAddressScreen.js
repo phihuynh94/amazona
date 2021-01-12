@@ -6,23 +6,23 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { saveShippingAddress } from "../actions/cartActions";
 
 function ShippingAddressScreen({ history }) {
-  const dispatch = useDispatch();
-
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-
-  const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
 
   if (!userInfo) {
     history.push("/signin");
   }
+
+  const cart = useSelector((state) => state.cart);
+  const { shippingAddress } = cart;
 
   const [fullName, setFullName] = useState(shippingAddress.fullName);
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
+
+  const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
