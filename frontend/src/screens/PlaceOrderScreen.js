@@ -67,7 +67,8 @@ function PlaceOrderScreen({ history }) {
                           </Link>
                         </div>
                         <div>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x ${item.price} = $
+                          {(item.qty * item.price).toFixed(2)}
                         </div>
                       </div>
                     </li>
@@ -86,19 +87,19 @@ function PlaceOrderScreen({ history }) {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>${cart.itemsPrice}</div>
+                  <div>${cart.itemsPrice.toFixed(2)}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Shipping</div>
-                  <div>${cart.shippingPrice}</div>
+                  <div>${cart.shippingPrice.toFixed(2)}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Tax</div>
-                  <div>${cart.taxPrice}</div>
+                  <div>${cart.taxPrice.toFixed(2)}</div>
                 </div>
               </li>
               <li>
@@ -106,7 +107,7 @@ function PlaceOrderScreen({ history }) {
                   <div>
                     <strong>Order Total</strong>
                   </div>
-                  <div>${cart.totalPrice}</div>
+                  <div>${cart.totalPrice.toFixed(2)}</div>
                 </div>
               </li>
               <li>
