@@ -5,12 +5,12 @@ import { savePaymentMethod } from "../actions/cartActions";
 
 import CheckoutSteps from "../components/CheckoutSteps";
 
-function PaymentMethodScreen(props) {
+function PaymentMethodScreen({ history }) {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
   if (!shippingAddress.address) {
-    props.history.push("/shipping");
+    history.push("/shipping");
   }
 
   const [paymentMethod, setPaymentMethod] = useState("PayPal");
@@ -20,7 +20,7 @@ function PaymentMethodScreen(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
-    props.history.push("/placeorder");
+    history.push("/placeorder");
   };
 
   return (
