@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
 
-import { detailsOrder } from "../actions/orderAction";
+import { detailsOrder, payOrder } from "../actions/orderAction";
 
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { ORDER_PAY_RESET } from "../constants/orderConstants";
 
 function OrderScreen({ match }) {
   const orderId = match.params.id;
@@ -16,6 +17,13 @@ function OrderScreen({ match }) {
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
+
+  const orderPay = useSelector((state) => state.orderPay);
+  const {
+    success: successPay,
+    error: errorPay,
+    loading: loadingPay,
+  } = orderPay;
 
   const dispatch = useDispatch();
 
@@ -32,7 +40,8 @@ function OrderScreen({ match }) {
       document.body.appendChild(script);
     };
 
-    if (!order) {
+    if (!order || successPay || (order && order._id !== orderId)) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(detailsOrder(orderId));
     } else {
       if (!order.isPaid) {
@@ -43,9 +52,11 @@ function OrderScreen({ match }) {
         }
       }
     }
-  }, [dispatch, orderId, order, sdkReady]);
+  }, [dispatch, orderId, order, sdkReady, successPay]);
 
-  const successPaymentHandler = () => {};
+  const successPaymentHandler = (paymentResult) => {
+    dispatch(payOrder(order, paymentResult));
+  };
 
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -163,6 +174,10 @@ function OrderScreen({ match }) {
                     <LoadingBox></LoadingBox>
                   ) : (
                     <>
+                      {errorPay && (
+                        <MessageBox variant="danger">{error}</MessageBox>
+                      )}
+                      {loadingPay && <LoadingBox />}
                       <PayPalButton
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}
