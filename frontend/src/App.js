@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { signout } from "./actions/userActions";
 
+import PrivateRoute from "./components/PrivateRoute";
+
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
@@ -76,7 +78,7 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen} />
           <Route path="/order/:id" component={OrderScreen} />
           <Route path="/orderhistory" component={OrderHistoryScreen} />
-          <Route path="/profile" component={ProfileScreen} />
+          <PrivateRoute path="/profile" component={ProfileScreen} />
         </main>
         <footer className="row center">All right reserved</footer>
       </div>
