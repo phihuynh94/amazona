@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signout } from "./actions/userActions";
 
 import PrivateRoute from "./components/PrivateRoute";
+import AdminRoute from "./components/AdminRoute";
 
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
@@ -16,6 +17,7 @@ import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import ProductListScreen from "./screens/ProductListScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -75,7 +77,7 @@ function App() {
                     <Link to="/dashboard">Dashboard</Link>
                   </li>
                   <li>
-                    <Link to="/produclist">Products</Link>
+                    <Link to="/productlist">Products</Link>
                   </li>
                   <li>
                     <Link to="/orderlist">Orders</Link>
@@ -100,6 +102,7 @@ function App() {
           <Route path="/order/:id" component={OrderScreen} />
           <Route path="/orderhistory" component={OrderHistoryScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} />
+          <AdminRoute path="/productlist" component={ProductListScreen} />
         </main>
         <footer className="row center">All right reserved</footer>
       </div>
