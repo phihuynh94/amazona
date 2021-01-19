@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { createProduct, listProducts } from "../actions/productActions";
+import {
+  createProduct,
+  deleteProduct,
+  listProducts,
+} from "../actions/productActions";
 
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+import {
+  PRODUCT_CREATE_RESET,
+  PRODUCT_DELETE_RESET,
+} from "../constants/productConstants";
 
 function ProductListScreen({ history }) {
   const productList = useSelector((state) => state.productList);
@@ -19,6 +26,13 @@ function ProductListScreen({ history }) {
     product: createdProduct,
   } = productCreate;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,11 +40,17 @@ function ProductListScreen({ history }) {
       dispatch({ type: PRODUCT_CREATE_RESET });
       history.push(`/product/${createdProduct._id}/edit`);
     }
-
+    if (successDelete) {
+      dispatch({ type: PRODUCT_DELETE_RESET });
+    }
     dispatch(listProducts());
-  }, [dispatch, createdProduct, history, successCreate]);
+  }, [dispatch, createdProduct, history, successCreate, successDelete]);
 
-  const deleteHandler = () => {};
+  const deleteHandler = (product) => {
+    if (window.confirm("Are you sure to delete?")) {
+      dispatch(deleteProduct(product._id));
+    }
+  };
 
   const createHandler = () => {
     dispatch(createProduct());
@@ -44,6 +64,9 @@ function ProductListScreen({ history }) {
           Create Product
         </button>
       </div>
+
+      {loadingDelete && <LoadingBox />}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 
       {loadingCreate && <LoadingBox />}
       {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
