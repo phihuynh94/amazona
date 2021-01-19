@@ -1,4 +1,7 @@
 .DS_Store
+/uploads/*.jpg
+/uploads/*.jpeg
+/uploads/*.png
 
 # Logs
 logs
