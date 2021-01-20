@@ -5,6 +5,7 @@ import { cartReducer } from "./reducers/cartReducers";
 import {
   orderCreateReducer,
   orderDeleteReducer,
+  orderDeliverReducer,
   orderDetailsReducer,
   orderListReducer,
   orderMyListReducer,
@@ -58,6 +59,7 @@ const reducer = combineReducers({
   orderMyList: orderMyListReducer,
   orderList: orderListReducer,
   orderDelete: orderDeleteReducer,
+  orderDeliver: orderDeliverReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

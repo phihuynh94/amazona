@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
 
-import { detailsOrder, payOrder } from "../actions/orderAction";
+import { deliverOrder, detailsOrder, payOrder } from "../actions/orderAction";
 
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import {
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from "../constants/orderConstants";
 
 function OrderScreen({ match }) {
   const orderId = match.params.id;
@@ -25,6 +28,16 @@ function OrderScreen({ match }) {
     loading: loadingPay,
   } = orderPay;
 
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const {
+    success: successDeliver,
+    error: errorDeliver,
+    loading: loadingDeliver,
+  } = orderDeliver;
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,8 +53,14 @@ function OrderScreen({ match }) {
       document.body.appendChild(script);
     };
 
-    if (!order || successPay || (order && order._id !== orderId)) {
+    if (
+      !order ||
+      successPay ||
+      successDeliver ||
+      (order && order._id !== orderId)
+    ) {
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(detailsOrder(orderId));
     } else {
       if (!order.isPaid) {
@@ -52,10 +71,14 @@ function OrderScreen({ match }) {
         }
       }
     }
-  }, [dispatch, orderId, order, sdkReady, successPay]);
+  }, [dispatch, orderId, order, sdkReady, successPay, successDeliver]);
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(order, paymentResult));
+  };
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order._id));
   };
 
   return loading ? (
@@ -184,6 +207,17 @@ function OrderScreen({ match }) {
                       />
                     </>
                   )}
+                </li>
+              )}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <li>
+                  <button
+                    type="button"
+                    className="primary block"
+                    onClick={deliverHandler}
+                  >
+                    Deliver Order
+                  </button>
                 </li>
               )}
             </ul>

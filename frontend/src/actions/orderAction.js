@@ -19,6 +19,9 @@ import {
   ORDER_DELETE_FAIL,
   ORDER_DELETE_REQUEST,
   ORDER_DELETE_SUCCESS,
+  ORDER_DELIVER_FAIL,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_SUCCESS,
 } from "../constants/orderConstants";
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -95,6 +98,33 @@ export const payOrder = (order, paymentResult) => async (
         : error.message;
 
     dispatch({ type: ORDER_PAY_FAIL, payload: message });
+  }
+};
+
+export const deliverOrder = (orderId) => async (dispatch, getState) => {
+  dispatch({ type: ORDER_DELIVER_REQUEST });
+
+  const {
+    userSignin: { userInfo },
+  } = getState();
+
+  try {
+    const { data } = axios.put(
+      `/api/orders/${orderId}/deliver`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      }
+    );
+
+    dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({ type: ORDER_DELIVER_FAIL, payload: message });
   }
 };
 
