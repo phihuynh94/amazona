@@ -19,6 +19,9 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_FAIL,
   USER_DELETE_SUCCESS,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_SUCCESS,
 } from "../constants/userConstants";
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -123,6 +126,31 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         : error.message;
 
     dispatch({ type: USER_UPDATE_PROFILE_FAIL, payload: message });
+  }
+};
+
+export const updateUser = (user) => async (dispatch, getState) => {
+  dispatch({ type: USER_UPDATE_REQUEST });
+
+  const {
+    userSignin: { userInfo },
+  } = getState();
+
+  try {
+    const { data } = await axios.put(`/api/users/${user._id}`, user, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+
+    dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({ type: USER_UPDATE_FAIL, payload: message });
   }
 };
 
