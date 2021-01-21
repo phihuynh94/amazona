@@ -7,8 +7,10 @@ import { ORDER_DELETE_RESET } from "../constants/orderConstants";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 
-function OrderListScreen({ history }) {
+function OrderListScreen({ history, match }) {
   const dispatch = useDispatch();
+
+  const sellerMode = match.path.indexOf("/seller") >= 0;
 
   const orderList = useSelector((state) => state.orderList);
   const { loading, error, orders } = orderList;
@@ -20,10 +22,13 @@ function OrderListScreen({ history }) {
     success: successDelete,
   } = orderDelete;
 
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
   useEffect(() => {
     dispatch({ type: ORDER_DELETE_RESET });
-    dispatch(listOrders());
-  }, [dispatch, successDelete]);
+    dispatch(listOrders({ seller: sellerMode ? userInfo._id : "" }));
+  }, [dispatch, successDelete, sellerMode, userInfo._id]);
 
   const deleteHandler = (order) => {
     if (window.confirm("Are you sure to delete?")) {

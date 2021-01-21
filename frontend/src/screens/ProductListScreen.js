@@ -14,7 +14,9 @@ import {
   PRODUCT_DELETE_RESET,
 } from "../constants/productConstants";
 
-function ProductListScreen({ history }) {
+function ProductListScreen({ history, match }) {
+  const sellerMode = match.path.indexOf("/seller") >= 0;
+
   const productList = useSelector((state) => state.productList);
   const { products, loading, error } = productList;
 
@@ -33,6 +35,9 @@ function ProductListScreen({ history }) {
     success: successDelete,
   } = productDelete;
 
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,8 +48,16 @@ function ProductListScreen({ history }) {
     if (successDelete) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
-    dispatch(listProducts());
-  }, [dispatch, createdProduct, history, successCreate, successDelete]);
+    dispatch(listProducts({ seller: sellerMode ? userInfo._id : "" }));
+  }, [
+    dispatch,
+    createdProduct,
+    history,
+    successCreate,
+    successDelete,
+    sellerMode,
+    userInfo._id,
+  ]);
 
   const deleteHandler = (product) => {
     if (window.confirm("Are you sure to delete?")) {
