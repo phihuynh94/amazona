@@ -90,11 +90,11 @@ Admin User List Screen
 
 Admin/Seller Product List Screen
 
-![admin list product screen](screenshots/admin/seller-products.png)
+![admin list product screen](screenshots/admin-seller-products.png)
 
 Admin/Seller Order List Screen
 
-![admin order list screen](screenshots/admin/seller-orders.png)
+![admin order list screen](screenshots/admin-seller-orders.png)
 
 Sign-in Screen
 
