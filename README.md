@@ -51,3 +51,55 @@ Home / Product List Screen
 Product Details Screen
 
 ![product details](screenshots/product.png)
+
+Shopping Cart Screen
+
+![shopping cart](screenshots/cart.png)
+
+Shipping Address Screen
+
+![shipping address](screenshots/shipping-address.png)
+
+Payment Method Screen
+
+![payment method](screenshots/payment-method.png)
+
+Place Order Screen
+
+![place order](screenshots/placeorder.png)
+
+Payment Screen
+
+![payment](screenshots/payment.png)
+
+Order Screen
+
+![order screen](screenshots/order.png)
+
+User Profile
+
+![user-profile](screenshots/profile.png)
+
+User Order History Screen
+
+![user-order-history](screenshots/order-history.png)
+
+Admin User List Screen
+
+![admin user list screen](screenshots/admin-users.png)
+
+Admin/Seller Product List Screen
+
+![admin list product screen](screenshots/admin/seller-products.png)
+
+Admin/Seller Order List Screen
+
+![admin order list screen](screenshots/admin/seller-orders.png)
+
+Sign-in Screen
+
+![sign-in](screenshots/signin.png)
+
+Sign-up Screen
+
+![sign-up](screenshots/register.png)
