@@ -43,3 +43,11 @@ npm start
 ```
 
 ## Screen Shots
+
+Home / Product List Screen
+
+![home](screenshots/home.png)
+
+Product Details Screen
+
+![product details](screenshots/product.png)
